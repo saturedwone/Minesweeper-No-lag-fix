@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Hub - Get Key</title>
+    <title>Script Hub</title>
     <style>
-        /* Estilos base con transiciones suaves */
+        /* Estilos base */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #050505; /* Negro profundo */
+            background-color: #050505;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -28,11 +28,11 @@
             text-align: center;
         }
 
-        /* Botón Inicial "Get Key" */
+        /* Botón Inicial "GET SCRIPT" */
         .btn-main {
             background-color: #ffffff;
             color: #000000;
-            border: 2px solid #00a2ff; /* Borde azul brillante */
+            border: 2px solid #00a2ff;
             padding: 16px 45px;
             font-size: 1.1rem;
             font-weight: 800;
@@ -49,9 +49,9 @@
             background-color: #f0f0f0;
         }
 
-        /* Contenedor del Script (Oculto al inicio) */
-        #key-section {
-            display: none; /* Se activa con JS */
+        /* Contenedor del Script */
+        #script-section {
+            display: none;
             flex-direction: column;
             gap: 12px;
             animation: fadeIn 0.5s ease;
@@ -62,11 +62,11 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* TextBox estilo Delta (Azulina y ancha) */
+        /* TextBox estilo Delta */
         .textbox {
             width: 100%;
-            background-color: #0d1b2a; /* Azul oscuro profundo */
-            color: #4cc9f0; /* Texto azul claro neón */
+            background-color: #0d1b2a;
+            color: #4cc9f0;
             border: 1.5px solid #00a2ff;
             padding: 18px;
             border-radius: 10px;
@@ -78,7 +78,7 @@
             cursor: default;
         }
 
-        /* Botón Copy Ancho */
+        /* Botón Copy */
         .btn-copy {
             width: 100%;
             background-color: #00a2ff;
@@ -97,11 +97,6 @@
             filter: brightness(1.1);
         }
 
-        .btn-copy:active {
-            transform: scale(0.98);
-        }
-
-        /* Clase para el estado de "Copiado" */
         .copied {
             background-color: #06d6a0 !important;
         }
@@ -110,47 +105,40 @@
 <body>
 
     <div class="container">
-        <button id="get-key-btn" class="btn-main">GET KEY</button>
+        <button id="get-script-btn" class="btn-main">GET SCRIPT</button>
 
-        <div id="key-section">
+        <div id="script-section">
             <textarea class="textbox" id="script-box" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/saturedwone/Mines-weeper-No-Lag-Fix/refs/heads/main/Mines%20weeper%20No%20Lag%20Fix"))()</textarea>
             <button id="copy-btn" class="btn-copy">COPY</button>
         </div>
     </div>
 
     <script>
-        const getKeyBtn = document.getElementById('get-key-btn');
-        const keySection = document.getElementById('key-section');
+        const getScriptBtn = document.getElementById('get-script-btn');
+        const scriptSection = document.getElementById('script-section');
         const copyBtn = document.getElementById('copy-btn');
         const scriptBox = document.getElementById('script-box');
 
-        // Al hacer click en Get Key
-        getKeyBtn.addEventListener('click', () => {
-            getKeyBtn.style.display = 'none'; // Oculta el botón central
-            keySection.style.display = 'flex'; // Muestra la caja y el botón de copiar
+        getScriptBtn.addEventListener('click', () => {
+            getScriptBtn.style.display = 'none';
+            scriptSection.style.display = 'flex';
         });
 
-        // Lógica para copiar al portapapeles
         copyBtn.addEventListener('click', () => {
-            // Seleccionar el texto
             scriptBox.select();
-            scriptBox.setSelectionRange(0, 99999); // Para dispositivos móviles
-
-            // Ejecutar el comando de copia
+            scriptBox.setSelectionRange(0, 99999);
+            
             try {
                 navigator.clipboard.writeText(scriptBox.value);
-                
-                // Efecto visual en el botón
                 const originalText = copyBtn.innerText;
                 copyBtn.innerText = "COPIED!";
                 copyBtn.classList.add('copied');
-
                 setTimeout(() => {
                     copyBtn.innerText = originalText;
                     copyBtn.classList.remove('copied');
                 }, 2000);
             } catch (err) {
-                console.error('Error al copiar: ', err);
+                console.error('Error al copiar');
             }
         });
     </script>
