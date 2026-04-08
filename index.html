@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Hub - Get Key</title>
+    <style>
+        /* Estilos base con transiciones suaves */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #050505; /* Negro profundo */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        /* Botón Inicial "Get Key" */
+        .btn-main {
+            background-color: #ffffff;
+            color: #000000;
+            border: 2px solid #00a2ff; /* Borde azul brillante */
+            padding: 16px 45px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 162, 255, 0.2);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 162, 255, 0.4);
+            background-color: #f0f0f0;
+        }
+
+        /* Contenedor del Script (Oculto al inicio) */
+        #key-section {
+            display: none; /* Se activa con JS */
+            flex-direction: column;
+            gap: 12px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* TextBox estilo Delta (Azulina y ancha) */
+        .textbox {
+            width: 100%;
+            background-color: #0d1b2a; /* Azul oscuro profundo */
+            color: #4cc9f0; /* Texto azul claro neón */
+            border: 1.5px solid #00a2ff;
+            padding: 18px;
+            border-radius: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+            text-align: center;
+            cursor: default;
+        }
+
+        /* Botón Copy Ancho */
+        .btn-copy {
+            width: 100%;
+            background-color: #00a2ff;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-copy:hover {
+            background-color: #0081cc;
+            filter: brightness(1.1);
+        }
+
+        .btn-copy:active {
+            transform: scale(0.98);
+        }
+
+        /* Clase para el estado de "Copiado" */
+        .copied {
+            background-color: #06d6a0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button id="get-key-btn" class="btn-main">GET KEY</button>
+
+        <div id="key-section">
+            <textarea class="textbox" id="script-box" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/saturedwone/Mines-weeper-No-Lag-Fix/refs/heads/main/Mines%20weeper%20No%20Lag%20Fix"))()</textarea>
+            <button id="copy-btn" class="btn-copy">COPY</button>
+        </div>
+    </div>
+
+    <script>
+        const getKeyBtn = document.getElementById('get-key-btn');
+        const keySection = document.getElementById('key-section');
+        const copyBtn = document.getElementById('copy-btn');
+        const scriptBox = document.getElementById('script-box');
+
+        // Al hacer click en Get Key
+        getKeyBtn.addEventListener('click', () => {
+            getKeyBtn.style.display = 'none'; // Oculta el botón central
+            keySection.style.display = 'flex'; // Muestra la caja y el botón de copiar
+        });
+
+        // Lógica para copiar al portapapeles
+        copyBtn.addEventListener('click', () => {
+            // Seleccionar el texto
+            scriptBox.select();
+            scriptBox.setSelectionRange(0, 99999); // Para dispositivos móviles
+
+            // Ejecutar el comando de copia
+            try {
+                navigator.clipboard.writeText(scriptBox.value);
+                
+                // Efecto visual en el botón
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = "COPIED!";
+                copyBtn.classList.add('copied');
+
+                setTimeout(() => {
+                    copyBtn.innerText = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                console.error('Error al copiar: ', err);
+            }
+        });
+    </script>
+
+</body>
+</html>
